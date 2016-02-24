@@ -2,7 +2,7 @@ print("Setting up WIFI...")
 wifi.setmode(wifi.STATION)
 
 --modify according your wireless router settings
-wifi.sta.config("TP-LINK_BERNAU","hepterida")
+wifi.sta.config("TP-LINK_BERNAU", "hepterida")
 wifi.sta.connect()
 
 tmr.alarm(1, 4000, 1, function() 

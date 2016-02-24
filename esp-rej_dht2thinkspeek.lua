@@ -2,7 +2,7 @@
 --natahne fce pro usinani
 dofile("esp-rej_rtcsleep.lua")
 
---ted neusinat
+--ted neusinat 
 rtc_hold_on()
         
 print("Acquiring data from sensor")
@@ -14,6 +14,9 @@ while (Sta ~= 0) and (Rep) do
     tmr.delay(100000)
     Rep = Rep - 1
 end
+
+Vbat = adc.read(0) * 0.003436 
+print("Bat voltage" .. Vbat)
 
 -- conection to thingspeak.com
 print("Forward to thingspeak.com")
@@ -32,9 +35,9 @@ conn:on("disconnection", function(conn)
     print("Got disconnection...") 
     
     tmr.delay(100000)
-    
+     
     --dem chrapat
-    rtc_asleep_for(0x02) 
+    rtc_asleep_for(0x15) 
 end)
 
 conn:on("sent", function(conn) 
@@ -51,7 +54,7 @@ conn:on("connection", function(conn)
     status = "connected" 
     print("Connected, sending data...")
 
-    http = "GET /update?api_key=27S3ML4BDYC2NE5J&field1="..Temperature..".0&field2="..Humidity..".0 HTTP/1.1\r\n"
+    http = "GET /update?api_key=27S3ML4BDYC2NE5J&field1="..Temperature.."&field2="..Humidity.."&field3="..Vbat.." HTTP/1.1\r\n"
     http = http .. "Host: api.thingspeak.com\r\n"
     http = http .. "Accept: */*\r\n"
     http = http .. "User-Agent: Mozilla/4.0 (compatible; esp8266 Lua; Windows NT 5.1)\r\n"
